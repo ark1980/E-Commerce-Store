@@ -43,3 +43,9 @@ body {
 .text-dark-blue {
   color: var(--darkBlue);
 }
+
+.productDetail {
+  color: var(--darkBlue);
+  font-size: 1.8rem;
+  padding: 1.1rem 0;
+}

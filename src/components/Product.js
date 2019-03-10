@@ -2,35 +2,43 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { ProductConsumer } from "../context";
 
 class Product extends Component {
   render() {
-    const { title, price, img, inCart } = this.props.product;
+    const { title, price, img, inCart, id } = this.props.product;
     return (
       <ProductWrapper className="col-9 col-md-6 col-lg-3 my-3 mx-auto">
         <div className="card p-5 mt-5">
-          <div className="img-container p-5">
-            <Link to="./details">
-              <img src={img} className="card-img-top" alt={title} />
-            </Link>
-            <button
-              className="cart-btn"
-              disabled={inCart ? true : false}
-              onClick={() => console.log("You clicked on add to cart btn")}
-            >
-              {inCart ? (
-                <p
-                  className="mb-0 font-weight-bold"
-                  disabled
-                  style={{ color: "#D3D3D3" }}
+          <ProductConsumer>
+            {data => (
+              <div
+                className="img-container p-5"
+                onClick={() => data.handleDetail(id)}
+              >
+                <Link to="./details">
+                  <img src={img} className="card-img-top" alt={title} />
+                </Link>
+                <button
+                  className="cart-btn"
+                  disabled={inCart ? true : false}
+                  onClick={() => data.addToCart(id)}
                 >
-                  Already in Cart
-                </p>
-              ) : (
-                <i className="fas fa-cart-plus fa-lg" />
-              )}
-            </button>
-          </div>
+                  {inCart ? (
+                    <p
+                      className="mb-0 font-weight-bold"
+                      disabled
+                      style={{ color: "#D3D3D3" }}
+                    >
+                      Already in Cart
+                    </p>
+                  ) : (
+                    <i className="fas fa-cart-plus fa-lg" />
+                  )}
+                </button>
+              </div>
+            )}
+          </ProductConsumer>
           <div className="card-footer d-flex justify-content-between">
             <h3 className="align-self-center mb-0">{title}</h3>
             <h2 className="text-dark-blue mb-0 font-italic">
@@ -45,10 +53,12 @@ class Product extends Component {
 }
 
 Product.propTypes = {
-  title: PropTypes.string,
-  price: PropTypes.string,
-  inCart: PropTypes.bool,
-  img: PropTypes.string
+  product: PropTypes.shape({
+    title: PropTypes.string,
+    price: PropTypes.number,
+    inCart: PropTypes.bool,
+    img: PropTypes.string
+  })
 };
 
 const ProductWrapper = styled.div`

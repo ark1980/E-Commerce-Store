@@ -13,7 +13,7 @@ class ProductList extends Component {
               <Title name="our" title="products" />
             </div>
             <div className="row">
-              {data.map(product => (
+              {data.products.map(product => (
                 <Product key={product.id} product={product} />
               ))}
             </div>

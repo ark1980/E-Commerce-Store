@@ -42,7 +42,7 @@ const Nav = styled.nav`
     text-transform: uppercase;
 
     &:hover {
-      color: var(--white) !important;
+      color: var(--ligthBlue) !important;
       transition: 0.3s ease;
     }
   }
